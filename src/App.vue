@@ -1,19 +1,11 @@
 <script setup>
 import { RouterView } from "vue-router";
-import { mapState, storeKey } from "vuex";
+import { mapState } from "vuex";
+import Home from "./components/Home.vue";
 </script>
 
 <template>
-    <button @click="getState('lumi')">get state a</button>
-    <br />
-    <button @click="getState('lira')">get state b</button>
-    <br />
-    <input type="text" v-model="name" />
-    <br />
-    <h1>{{ name }}</h1>
-    <br />
-    <button @click="changeName">submit</button>
-    <RouterView />
+    <home />
 </template>
 
 <style scoped>
