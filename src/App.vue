@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
-import { mapState } from "vuex";
+import { mapState, storeKey } from "vuex";
 </script>
 
 <template>
@@ -8,6 +8,9 @@ import { mapState } from "vuex";
     <br />
     <button @click="increment">increment</button>
     <button @click="getTodo">getter</button>
+    <br />
+    <button @click="newFunction">dispatch</button>
+    <button @click="newFunction1">async</button>
     <h1>{{ count }}</h1>
     <RouterView />
 </template>
@@ -85,13 +88,23 @@ export default {
     },
     methods: {
         increment() {
-            this.$store.commit("increment", {
-                amount: 10,
-            });
+            this.$store.commit({ type: "incrementNew", amount: 10 });
             console.log(this.$store.state.count);
         },
         getTodo() {
             console.log(this.$store.getters.getTodoById(2));
+        },
+        newFunction() {
+            console.log("inside");
+            this.$store.dispatch("increment", {
+                amount: 100,
+            });
+        },
+        newFunction1() {
+            console.log("inside");
+            this.$store.dispatch("incrementAsync", {
+                amount: 10,
+            });
         },
     },
     computed: {
