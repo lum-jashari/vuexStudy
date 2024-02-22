@@ -4,14 +4,15 @@ import { mapState, storeKey } from "vuex";
 </script>
 
 <template>
-    <h1>test</h1>
+    <button @click="getState('lumi')">get state a</button>
     <br />
-    <button @click="increment">increment</button>
-    <button @click="getTodo">getter</button>
+    <button @click="getState('lira')">get state b</button>
     <br />
-    <button @click="newFunction">dispatch</button>
-    <button @click="newFunction1">async</button>
-    <h1>{{ count }}</h1>
+    <input type="text" v-model="name" />
+    <br />
+    <h1>{{ name }}</h1>
+    <br />
+    <button @click="changeName">submit</button>
     <RouterView />
 </template>
 
@@ -84,32 +85,21 @@ export default {
     data() {
         return {
             localCount: 0,
+            name: "",
         };
     },
     methods: {
-        increment() {
-            this.$store.commit({ type: "incrementNew", amount: 10 });
-            console.log(this.$store.state.count);
+        getState(module) {
+            module == "lumi"
+                ? console.log(this.$store.state.lumi)
+                : console.log(this.$store.state.lira);
         },
-        getTodo() {
-            console.log(this.$store.getters.getTodoById(2));
-        },
-        newFunction() {
-            console.log("inside");
-            this.$store.dispatch("increment", {
-                amount: 100,
+        changeName() {
+            console.log(this.$store.state);
+            this.$store.commit({
+                type: "changeName",
+                name: this.name,
             });
-        },
-        newFunction1() {
-            console.log("inside");
-            this.$store.dispatch("incrementAsync", {
-                amount: 10,
-            });
-        },
-    },
-    computed: {
-        count() {
-            return this.$store.state.count;
         },
     },
 };

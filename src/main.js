@@ -5,65 +5,43 @@ import { createStore } from "vuex";
 import App from "./App.vue";
 import router from "./router";
 
-const store = createStore({
-    state: {
-        count: 1,
-        // todos: [
-        //     {
-        //         id: 1,
-        //         text: "blablabla",
-        //         done: true,
-        //     },
-        //     {
-        //         id: 2,
-        //         text: "bulubulu",
-        //         done: false,
-        //     },
-        // ],
-    },
+const moduleA = {
+    state: () => ({
+        name: "lumi",
+        surname: "jashari",
+        age: 23,
+        height: 182,
+    }),
     mutations: {
-        increment(state, payload) {
-            state.count += payload.amount;
+        changeName(state, payload) {
+            state.name = payload.name;
+        },
+    },
+};
+const moduleB = {
+    state: () => ({
+        name: "lira",
+        surname: "jashari",
+        age: 17,
+        height: 169,
+    }),
+    mutations: {
+        changeName(state, payload) {
+            state.name = payload.name;
         },
     },
     actions: {
-        increment({ commit }, payload) {
-            commit("increment", payload);
-        },
-        incrementAsync({ commit }, payload) {
-            setTimeout(() => {
-                commit("increment", payload);
-            }, 1000);
+        changeName({ state, commit, rootState }) {
+            commit("changeName");
         },
     },
-    // getters: {
-    //     doneTodos(state) {
-    //         console.log(state.todos.filter((todo) => todo.done));
-    //         return state.todos.filter((todo) => todo.done);
-    //     },
-    //     doneTodosCount(state, getters) {
-    //         return getters.doneTodos.length;
-    //     },
-    //     getTodoById: (state) => (id) => {
-    //         return state.todos.find((todo) => todo.id === id);
-    //     },
-    // },
-    // mutations: {
-    //     // increment(state, payload) {
-    //     //     state.count += payload.amount;
-    //     // },
-    //     incrementNew(state) {
-    //         state.count++;
-    //     },
-    //     //     changeName(state, newName) {
-    //     //         state.name = newName;
-    //     //     },
-    // },
-    // actions: {
-    //     increment({ context }) {
-    //         context.commit("incrementNew");
-    //     },
-    // },
+};
+
+const store = createStore({
+    modules: {
+        lumi: moduleA,
+        lira: moduleB,
+    },
 });
 
 const app = createApp(App);
